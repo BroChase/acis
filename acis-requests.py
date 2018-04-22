@@ -61,7 +61,8 @@ def getRange(start, end, FIPS):
 
 
 # '08113', '08091', '08111', '08067', '08053', '08079','08109', '08049', '08037', '08051','08065', '08097', '08117',
-FIPS_ids = ['08107', '08057', '08069']
+# '08107', '08057', '08069', '08013'
+FIPS_ids = ['08019']
 
 for c in FIPS_ids:
     L1 = []
@@ -80,65 +81,3 @@ for c in FIPS_ids:
     df2 = pd.DataFrame.from_records(L2)
     df.to_csv(FIPS+'precip.csv')
     df2.to_csv(FIPS+'temp.csv')
-
-
-
-
-print('test')
-# #base_url = 'http://data.rcc-acis.org/MultiStnData'
-# http = urllib3.PoolManager()
-# params = {
-#     "county": "08037",
-#     "sdate": "2015-1-1",
-#     "edate": "2015-12-31",
-#     "elems": "pcpn,avgt"
-# }
-# r = http.request('GET', base_url, fields=params)
-# p = json.loads(r.data.decode('utf-8'))
-# lis = []
-# tlis = []
-# for i, data in p.items():
-#     for m in data:
-#         df = pd.DataFrame(m['data'])
-#         ser = df.to_dict()
-#         for k, value in ser.items():
-#             if k == 0:
-#                 lis.append(value)
-#             else:
-#                 tlis.append(value)
-# df = pd.DataFrame.from_dict(lis)
-# df2 = pd.DataFrame.from_dict(tlis)
-# # replace missing M variables with zeros
-# df.replace('M', np.nan, inplace=True)
-# df2.replace('M', np.nan, inplace=True)
-# # replace missing T variables with zeros
-# df.replace('T', np.nan, inplace=True)
-# df2.replace('T', np.nan, inplace=True)
-#
-# avg = []
-# avg2 =[]
-# # find the regions average precipitation per day
-# for i in range(df.shape[1]):
-#     df[i] = df[i].astype('float64')
-#     nantotal = df[i].isnull().sum()
-#     total = df[i].sum()
-#     avg.append(total/(df.shape[0]-nantotal))
-# for i in range(df2.shape[1]):
-#     df2[i] = df2[i].astype('float64')
-#     nantotal = df2[i].isnull().sum()
-#     total = df2[i].sum()
-#     avg2.append(total/(df.shape[0]-nantotal))
-#
-#
-# # new dataframe with daily region precipitation
-# df = pd.DataFrame(avg, columns=['avgP'])
-# df = df.transpose()
-# # df2 = pd.DataFrame(avg2, columns=['temp'])
-# df2 = pd.DataFrame(avg2, columns=['avgT'])
-# df2 = df2.transpose()
-# result = df.append(df2)
-# new_col = ['08037', '08037']
-# result.insert(loc=0, column='county', value=new_col)
-# new_col = ['2015-1-1', '2015-1-1']
-# result.insert(loc=0, column='Year', value=new_col)
-# print("fuq")
