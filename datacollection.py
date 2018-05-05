@@ -3,6 +3,8 @@ import numpy as np
 import regex as re
 import json
 import pandas as pd
+import os
+
 
 def getRange(start, end, FIPS):
 
@@ -82,8 +84,10 @@ def multi_year_data(FIPS_ids, startdate, years):
 
         df = pd.DataFrame.from_records(L1)
         df2 = pd.DataFrame.from_records(L2)
-        df.to_csv(FIPS + 'precip.csv')
-        df2.to_csv(FIPS + 'temp.csv')
+        makedir(startdate+'/precip')
+        makedir(startdate+'/temp')
+        df.to_csv(startdate+'/precip/' + FIPS + 'precip.csv')
+        df2.to_csv(startdate+'/temp/' + FIPS + 'temp.csv')
 
 
 def single_year_data(FIPS_ids):
@@ -100,5 +104,17 @@ def single_year_data(FIPS_ids):
 
         df = pd.DataFrame.from_records(L1)
         df2 = pd.DataFrame.from_records(L2)
-        df.to_csv(FIPS + 'precip.csv')
-        df2.to_csv(FIPS + 'temp.csv')
+        makedir(startdate+'/precip')
+        makedir(startdate+'/temp')
+        df.to_csv(startdate+'/precip/' + FIPS + 'precip.csv')
+        df2.to_csv(startdate+'/temp/' + FIPS + 'temp.csv')
+
+
+def makedir(path):
+    if os.path.isdir(path): pass
+    elif os.path.isfile(path):
+        raise OSError("%s exists." % path)
+    else:
+        parent, directory = os.path.split(path)
+        if parent and not os.path.isdir(parent): makedir(parent)
+        if directory: os.mkdir(path)
