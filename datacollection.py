@@ -76,18 +76,20 @@ def multi_year_data(FIPS_ids, startdate, years):
         FIPS = c
         sdate = startdate
         for i in range(years):
-            startdate = str(sdate + i) + '-1-1'
+            sd = str(sdate + i) + '-1-1'
             enddate = str(sdate + i) + '-12-31'
-            Plist, Tlist = getRange(startdate, enddate, FIPS)
+            Plist, Tlist = getRange(sd, enddate, FIPS)
             L1.append(Plist)
             L2.append(Tlist)
 
         df = pd.DataFrame.from_records(L1)
         df2 = pd.DataFrame.from_records(L2)
-        makedir(startdate+'/precip')
-        makedir(startdate+'/temp')
-        df.to_csv(startdate+'/precip/' + FIPS + 'precip.csv')
-        df2.to_csv(startdate+'/temp/' + FIPS + 'temp.csv')
+
+        # sd = startdate.split('-')
+        makedir('Multiyear'+'/precip')
+        makedir('Multiyear'+'/temp')
+        df.to_csv('Multiyear'+'/precip/' + FIPS + 'precip.csv')
+        df2.to_csv('Multiyear'+'/temp/' + FIPS + 'temp.csv')
 
 
 def single_year_data(FIPS_ids):
@@ -102,12 +104,14 @@ def single_year_data(FIPS_ids):
         L1.append(Plist)
         L2.append(Tlist)
 
+        sd = startdate.split('-')
+
         df = pd.DataFrame.from_records(L1)
         df2 = pd.DataFrame.from_records(L2)
-        makedir(startdate+'/precip')
-        makedir(startdate+'/temp')
-        df.to_csv(startdate+'/precip/' + FIPS + 'precip.csv')
-        df2.to_csv(startdate+'/temp/' + FIPS + 'temp.csv')
+        makedir(str(sd[0])+'/precip')
+        makedir(str(sd[0])+'/temp')
+        df.to_csv(str(sd[0])+'/precip/' + FIPS + 'precip.csv')
+        df2.to_csv(str(sd[0])+'/temp/' + FIPS + 'temp.csv')
 
 
 def makedir(path):
